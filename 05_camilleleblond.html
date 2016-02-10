@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>05_template</title>
+</head>
+<body>
+    <button id="clickme">Click me</button>
+    <button id="clickon">Click on</button>
+    <button id="clickoff">Click off</button>
+    <div id="status">...</div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+    <script>
+    var socket = io('/');
+    socket.on('status', function(data) {
+        console.log(data);
+        $("#status").html(data.pinStatus);
+    });
+
+    $('#clickme').on("click", doclick);
+
+    function doclick(event) {
+        //console.log(event);
+        payload = {};
+        payload.timeStamp = event.timeStamp;
+        socket.emit('doServer', payload);
+    }
+     $('#clickon').on("click", doclickon);
+
+    function doclickon(event) {
+        console.log("clickon");
+        payload = {};
+        payload.timeStamp = event.timeStamp;
+        socket.emit('doServeron', payload);
+    }
+     $('#clickoff').on("click", doclickoff);
+
+    function doclickoff(event) {
+        console.log("clickoff");
+        payload = {};
+        payload.timeStamp = event.timeStamp;
+        socket.emit('doServeroff', payload);
+    }
+    </script>
+
+    <body>
+
+</html>
